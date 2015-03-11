@@ -1,0 +1,12 @@
+echo ---Programming FPGA---
+fatload mmc 0:1 $fpgadata DE0_NANO_SOC/output_files/DE0_NANO_SOC.rbf;
+fpga load 0 $fpgadata $filesize;
+
+echo ---Setting Env variables---
+set fdtimage DE0_NANO_SOC/soc_system.dtb;
+setenv bootimage zImage
+
+echo ---Booting Linux---
+run bridge_enable_handoff;
+run mmcload;
+run mmcboot;
