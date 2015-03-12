@@ -84,4 +84,8 @@ these aliases allows seamless support of multiple emacs
 
 <DTAppend name="compatible" type="string" parentlabel="memcpy_msgdma" val="demo,memcpy_msgdma"/>
 
+<!-- these two can be removed when 14.1 or newer is used to generate the sopinfo -->
+<DTAppend name="snps,nr-gpios" type="number" parentlabel="hps_0_gpio0_porta" val="29"/>
+<DTAppend name="snps,nr-gpios" type="number" parentlabel="hps_0_gpio1_porta" val="29"/>
+
 </BoardInfo>

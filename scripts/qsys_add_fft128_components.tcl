@@ -38,11 +38,11 @@ add_connection intr_capturer_0.interrupt_receiver fft_sub.sgdma_to_fft_csr_irq i
 set_connection_parameter_value intr_capturer_0.interrupt_receiver/fft_sub.sgdma_to_fft_csr_irq irqNumber {4}
 
 # Clocks
-add_connection hps_0.h2f_user1_clock fft_ddr_bridge.clock clock
-add_connection hps_0.h2f_user1_clock fft_sub.clk clock
+add_connection clk_0.clk fft_ddr_bridge.clock clock
+add_connection clk_0.clk fft_sub.clk clock
 
 # Resets
-add_connection hps_0.h2f_reset fft_sub.reset reset
-add_connection hps_0.h2f_reset fft_ddr_bridge.reset reset
+add_connection clk_0.clk_reset fft_sub.reset reset
+add_connection clk_0.clk_reset fft_ddr_bridge.reset reset
            
 save_system

@@ -211,6 +211,7 @@ add_connection clk_0.clk dipsw_pio.clk clock
 add_connection clk_0.clk button_pio.clk clock
    
 # Resets
+add_connection hps_0.h2f_reset hps_clk_out.clk_in_reset reset
 add_connection clk_0.clk_reset lw_mm_bridge.reset reset
 add_connection clk_0.clk_reset sysid_qsys.reset reset
 add_connection clk_0.clk_reset jtag_uart.reset reset
@@ -218,7 +219,6 @@ add_connection clk_0.clk_reset onchip_memory2_0.reset1 reset
 add_connection clk_0.clk_reset hps_only_master.clk_reset reset
 add_connection clk_0.clk_reset fpga_only_master.clk_reset reset
 add_connection clk_0.clk_reset f2sdram_only_master.clk_reset reset
-add_connection clk_0.clk_reset hps_clk_out.clk_in_reset reset
 add_connection clk_0.clk_reset intr_capturer_0.reset_sink reset
 add_connection clk_0.clk_reset button_pio.reset reset
 add_connection clk_0.clk_reset dipsw_pio.reset reset
