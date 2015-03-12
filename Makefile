@@ -215,6 +215,7 @@ sd-fat: $(SD_FAT_TGZ)
 AR_FILES += $(wildcard $(SD_FAT_TGZ))
 
 SCRUB_CLEAN_FILES += $(SD_FAT_TGZ)
+SCRUB_CLEAN_FILES += u-boot.scr
 
 ################################################
 
