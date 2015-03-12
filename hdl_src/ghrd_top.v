@@ -123,6 +123,7 @@ assign arduino_reset_n = 1'b1;
 
 assign gpio_0 = 36'hZZZZZZZZZ;
 assign gpio_1 = 36'hZZZZZZZZZ;
+assign fpga_led_pio = fpga_led_internal;
 
 // SoC sub-system module
 soc_system soc_inst (
