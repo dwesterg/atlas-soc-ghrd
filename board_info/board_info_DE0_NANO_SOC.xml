@@ -127,10 +127,61 @@
 <val type="string">heartbeat</val>
 </DTAppend>
 
+
+<DTAppend name="keys" type="node" parentlabel="sopc0" newlabel="soc_keys"/>
+<DTAppend name="compatible" type="string" parentlabel="soc_keys" val="gpio-keys"/>
+<DTAppend name="#address-cells" type="number" parentlabel="soc_keys" val="1"/>
+<DTAppend name="#size-cells" type="number" parentlabel="soc_keys" val="0"/>
+
+<DTAppend name="SW0" type="node" parentlabel="soc_keys" newlabel="SW0"/>
+<DTAppend name="SW1" type="node" parentlabel="soc_keys" newlabel="SW1"/>
+<DTAppend name="SW2" type="node" parentlabel="soc_keys" newlabel="SW2"/>
+<DTAppend name="SW3" type="node" parentlabel="soc_keys" newlabel="SW3"/> 
+
+<DTAppend name="label" type="string" parentlabel="SW0" val="SW0"/>
+<DTAppend name="label" type="string" parentlabel="SW1" val="SW1"/>
+<DTAppend name="label" type="string" parentlabel="SW2" val="SW2"/>
+<DTAppend name="label" type="string" parentlabel="SW3" val="SW3"/>
+
+<DTAppend name="gpios" parentlabel="SW0" >
+<val type="phandle">dipsw_pio</val>
+<val type="number">0</val>
+<val type="number">1</val>
+</DTAppend>
+
+<DTAppend name="gpios" parentlabel="SW1" >
+<val type="phandle">dipsw_pio</val>
+<val type="number">1</val>
+<val type="number">1</val>
+</DTAppend>
+
+<DTAppend name="gpios" parentlabel="SW2" >
+<val type="phandle">dipsw_pio</val>
+<val type="number">2</val>
+<val type="number">1</val>
+</DTAppend>
+
+<DTAppend name="gpios" parentlabel="SW3" >
+<val type="phandle">dipsw_pio</val>
+<val type="number">3</val>
+<val type="number">1</val>
+</DTAppend>
+
+<DTAppend name="linux,code" type="number" parentlabel="SW0" val="0x40"/>
+<DTAppend name="linux,code" type="number" parentlabel="SW1" val="0x41"/>
+<DTAppend name="linux,code" type="number" parentlabel="SW2" val="0x42"/>
+<DTAppend name="linux,code" type="number" parentlabel="SW3" val="0x43"/>
+
+<DTAppend name="debounce-interval" type="number" parentlabel="SW0" val="50"/>
+<DTAppend name="debounce-interval" type="number" parentlabel="SW1" val="50"/>
+<DTAppend name="debounce-interval" type="number" parentlabel="SW2" val="50"/>
+<DTAppend name="debounce-interval" type="number" parentlabel="SW3" val="50"/>
+
 <DTAppend name="adxl345@0" type="node" parentlabel="hps_0_i2c0" newlabel="adxl345"/>
 <DTAppend name="#interrupt-cells" type="number" parentlabel="adxl345" val="2" />
 <DTAppend name="compatible" type="string" parentlabel="adxl345" val="adi,adxl34x" />
 <DTAppend name="reg" parentlabel="adxl345" type="number" val="0x53" />
+<DTAppend name="interrupt-controller" parentlabel="adxl345" />
 <DTAppend name="interrupt-parent" parentlabel="adxl345" >
 <val type="phandle">hps_0_gpio2_porta</val>
 </DTAppend>
