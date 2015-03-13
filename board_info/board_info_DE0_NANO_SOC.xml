@@ -127,6 +127,20 @@
 <val type="string">heartbeat</val>
 </DTAppend>
 
+<DTAppend name="adxl345@0" type="node" parentlabel="hps_0_i2c0" newlabel="adxl345"/>
+<DTAppend name="#interrupt-cells" type="number" parentlabel="adxl345" val="2" />
+<DTAppend name="compatible" type="string" parentlabel="adxl345" val="adi,adxl34x" />
+<DTAppend name="reg" parentlabel="adxl345" type="number" val="0x53" />
+<DTAppend name="interrupt-parent" parentlabel="adxl345" >
+<val type="phandle">hps_0_gpio2_porta</val>
+</DTAppend>
+<DTAppend name="interrupts" parentlabel="adxl345" >
+<val type="number">2</val>
+<val type="number">4</val>
+</DTAppend>
+
+<DTAppend name="compatible" type="string" parentlabel="fft_sub_FFT_STadapter_0" val="altr,fft_stadapter" />
+
 <Chosen>
         <Bootargs val="console=ttyS0,115200"></Bootargs>
 </Chosen>
