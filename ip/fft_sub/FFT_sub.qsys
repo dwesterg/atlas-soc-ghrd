@@ -21,7 +21,7 @@
    {
       datum _sortIndex
       {
-         value = "7";
+         value = "8";
          type = "int";
       }
    }
@@ -163,6 +163,30 @@
          type = "String";
       }
    }
+   element sgdma_from_ram
+   {
+      datum _sortIndex
+      {
+         value = "7";
+         type = "int";
+      }
+   }
+   element sgdma_from_ram.csr
+   {
+      datum baseAddress
+      {
+         value = "163840";
+         type = "String";
+      }
+   }
+   element sgdma_from_ram.descriptor_slave
+   {
+      datum baseAddress
+      {
+         value = "229376";
+         type = "String";
+      }
+   }
    element sgdma_to_fft
    {
       datum _sortIndex
@@ -207,7 +231,7 @@
  <parameter name="globalResetBus" value="false" />
  <parameter name="hdlLanguage" value="VERILOG" />
  <parameter name="hideFromIPCatalog" value="false" />
- <parameter name="maxAdditionalLatency" value="0" />
+ <parameter name="maxAdditionalLatency" value="1" />
  <parameter name="projectName" value="soc_system.qpf" />
  <parameter name="sopcBorderPoints" value="false" />
  <parameter name="systemHash" value="0" />
@@ -224,6 +248,11 @@
    type="interrupt"
    dir="end" />
  <interface
+   name="sgdma_from_ram_csr_irq"
+   internal="sgdma_from_ram.csr_irq"
+   type="interrupt"
+   dir="end" />
+ <interface
    name="sgdma_to_fft_csr_irq"
    internal="sgdma_to_fft.csr_irq"
    type="interrupt"
@@ -236,8 +265,8 @@
   <parameter name="AUTO_DEVICE_FAMILY" value="Cyclone V" />
   <parameter name="DATA_WIDTH" value="64" />
   <parameter name="LINEWRAPBURSTS" value="0" />
-  <parameter name="MAX_BURST_SIZE" value="16" />
-  <parameter name="MAX_PENDING_RESPONSES" value="4" />
+  <parameter name="MAX_BURST_SIZE" value="32" />
+  <parameter name="MAX_PENDING_RESPONSES" value="8" />
   <parameter name="PIPELINE_COMMAND" value="1" />
   <parameter name="PIPELINE_RESPONSE" value="1" />
   <parameter name="SYMBOL_WIDTH" value="8" />
@@ -261,7 +290,7 @@
    version="14.1"
    enabled="1">
   <parameter name="allowInSystemMemoryContentEditor" value="false" />
-  <parameter name="autoInitializationFileName" value="$${FILENAME}_data" />
+  <parameter name="autoInitializationFileName" value="FFT_sub_data" />
   <parameter name="blockType" value="AUTO" />
   <parameter name="copyInitFile" value="false" />
   <parameter name="dataWidth" value="64" />
@@ -324,7 +353,7 @@
   <parameter name="AUTO_DEVICE" value="5CSEMA4U23C6" />
   <parameter name="AUTO_DEVICE_FAMILY" value="Cyclone V" />
   <parameter name="AUTO_DEVICE_SPEEDGRADE" value="6" />
-  <parameter name="BURST_ENABLE" value="0" />
+  <parameter name="BURST_ENABLE" value="1" />
   <parameter name="BURST_WRAPPING_SUPPORT" value="0" />
   <parameter name="CHANNEL_ENABLE" value="0" />
   <parameter name="CHANNEL_WIDTH" value="8" />
@@ -334,10 +363,34 @@
   <parameter name="ENHANCED_FEATURES" value="0" />
   <parameter name="ERROR_ENABLE" value="1" />
   <parameter name="ERROR_WIDTH" value="2" />
-  <parameter name="MAX_BURST_COUNT" value="2" />
+  <parameter name="MAX_BURST_COUNT" value="32" />
   <parameter name="MAX_BYTE" value="131072" />
   <parameter name="MAX_STRIDE" value="1" />
   <parameter name="MODE" value="2" />
+  <parameter name="PACKET_ENABLE" value="1" />
+  <parameter name="PROGRAMMABLE_BURST_ENABLE" value="0" />
+  <parameter name="RESPONSE_PORT" value="2" />
+  <parameter name="STRIDE_ENABLE" value="0" />
+  <parameter name="TRANSFER_TYPE" value="Aligned Accesses" />
+ </module>
+ <module name="sgdma_from_ram" kind="altera_msgdma" version="14.1" enabled="1">
+  <parameter name="AUTO_DEVICE" value="5CSEMA4U23C6" />
+  <parameter name="AUTO_DEVICE_FAMILY" value="Cyclone V" />
+  <parameter name="AUTO_DEVICE_SPEEDGRADE" value="6" />
+  <parameter name="BURST_ENABLE" value="1" />
+  <parameter name="BURST_WRAPPING_SUPPORT" value="0" />
+  <parameter name="CHANNEL_ENABLE" value="0" />
+  <parameter name="CHANNEL_WIDTH" value="8" />
+  <parameter name="DATA_FIFO_DEPTH" value="128" />
+  <parameter name="DATA_WIDTH" value="64" />
+  <parameter name="DESCRIPTOR_FIFO_DEPTH" value="128" />
+  <parameter name="ENHANCED_FEATURES" value="0" />
+  <parameter name="ERROR_ENABLE" value="1" />
+  <parameter name="ERROR_WIDTH" value="2" />
+  <parameter name="MAX_BURST_COUNT" value="32" />
+  <parameter name="MAX_BYTE" value="131072" />
+  <parameter name="MAX_STRIDE" value="1" />
+  <parameter name="MODE" value="0" />
   <parameter name="PACKET_ENABLE" value="1" />
   <parameter name="PROGRAMMABLE_BURST_ENABLE" value="0" />
   <parameter name="RESPONSE_PORT" value="2" />
@@ -348,17 +401,17 @@
   <parameter name="AUTO_DEVICE" value="5CSEMA4U23C6" />
   <parameter name="AUTO_DEVICE_FAMILY" value="Cyclone V" />
   <parameter name="AUTO_DEVICE_SPEEDGRADE" value="6" />
-  <parameter name="BURST_ENABLE" value="0" />
+  <parameter name="BURST_ENABLE" value="1" />
   <parameter name="BURST_WRAPPING_SUPPORT" value="0" />
   <parameter name="CHANNEL_ENABLE" value="0" />
   <parameter name="CHANNEL_WIDTH" value="8" />
-  <parameter name="DATA_FIFO_DEPTH" value="128" />
+  <parameter name="DATA_FIFO_DEPTH" value="256" />
   <parameter name="DATA_WIDTH" value="32" />
   <parameter name="DESCRIPTOR_FIFO_DEPTH" value="128" />
   <parameter name="ENHANCED_FEATURES" value="0" />
   <parameter name="ERROR_ENABLE" value="1" />
   <parameter name="ERROR_WIDTH" value="2" />
-  <parameter name="MAX_BURST_COUNT" value="2" />
+  <parameter name="MAX_BURST_COUNT" value="64" />
   <parameter name="MAX_BYTE" value="131072" />
   <parameter name="MAX_STRIDE" value="1" />
   <parameter name="MODE" value="1" />
@@ -390,6 +443,15 @@
    kind="avalon"
    version="14.1"
    start="mm_bridge_0.m0"
+   end="sgdma_from_ram.csr">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x00028000" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="14.1"
+   start="mm_bridge_0.m0"
    end="sgdma_from_fft.descriptor_slave">
   <parameter name="arbitrationPriority" value="1" />
   <parameter name="baseAddress" value="0x00030000" />
@@ -402,6 +464,15 @@
    end="sgdma_to_fft.descriptor_slave">
   <parameter name="arbitrationPriority" value="1" />
   <parameter name="baseAddress" value="0x00010000" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="14.1"
+   start="mm_bridge_0.m0"
+   end="sgdma_from_ram.descriptor_slave">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x00038000" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -439,7 +510,25 @@
  <connection
    kind="avalon"
    version="14.1"
+   start="sgdma_from_ram.mm_read"
+   end="data.s1">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x00040000" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="14.1"
    start="sgdma_from_fft.mm_write"
+   end="DDR.s0">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x40000000" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="14.1"
+   start="sgdma_from_ram.mm_write"
    end="DDR.s0">
   <parameter name="arbitrationPriority" value="1" />
   <parameter name="baseAddress" value="0x40000000" />
@@ -494,6 +583,11 @@
    start="clk_0.clk"
    end="FFT_STadapter_0.clock" />
  <connection
+   kind="clock"
+   version="14.1"
+   start="clk_0.clk"
+   end="sgdma_from_ram.clock" />
+ <connection
    kind="reset"
    version="14.1"
    start="clk_0.clk_reset"
@@ -519,9 +613,18 @@
    kind="reset"
    version="14.1"
    start="clk_0.clk_reset"
+   end="sgdma_from_ram.reset_n" />
+ <connection
+   kind="reset"
+   version="14.1"
+   start="clk_0.clk_reset"
    end="fft_ii_0.rst" />
  <interconnectRequirement for="$system" name="qsys_mm.clockCrossingAdapter" value="HANDSHAKE" />
  <interconnectRequirement for="$system" name="qsys_mm.insertDefaultSlave" value="FALSE" />
- <interconnectRequirement for="$system" name="qsys_mm.maxAdditionalLatency" value="0" />
+ <interconnectRequirement for="$system" name="qsys_mm.maxAdditionalLatency" value="1" />
  <interconnectRequirement for="hps_only_master.master" name="qsys_mm.security" value="SECURE" />
+ <interconnectRequirement
+   for="mm_interconnect_0|cmd_mux_008.src/DDR_s0_burst_adapter.sink0"
+   name="qsys_mm.postTransform.pipelineCount"
+   value="1" />
 </system>

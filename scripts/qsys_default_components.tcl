@@ -21,11 +21,11 @@ set_instance_parameter_value fpga_only_master {PLI_PORT} {50000}
 set_instance_parameter_value fpga_only_master {FAST_VER} {0}
 set_instance_parameter_value fpga_only_master {FIFO_DEPTHS} {2}
 
-add_instance hps_only_master altera_jtag_avalon_master
-set_instance_parameter_value hps_only_master {USE_PLI} {0}
-set_instance_parameter_value hps_only_master {PLI_PORT} {50000}
-set_instance_parameter_value hps_only_master {FAST_VER} {0}
-set_instance_parameter_value hps_only_master {FIFO_DEPTHS} {2}
+#add_instance hps_only_master altera_jtag_avalon_master
+#set_instance_parameter_value hps_only_master {USE_PLI} {0}
+#set_instance_parameter_value hps_only_master {PLI_PORT} {50000}
+#set_instance_parameter_value hps_only_master {FAST_VER} {0}
+#set_instance_parameter_value hps_only_master {FIFO_DEPTHS} {2}
 
 add_instance lw_mm_bridge altera_avalon_mm_bridge
 set_instance_parameter_value lw_mm_bridge {DATA_WIDTH} {32}
@@ -163,10 +163,10 @@ set_connection_parameter_value hps_0.h2f_axi_master/onchip_memory2_0.s1 baseAddr
 set_connection_parameter_value hps_0.h2f_axi_master/onchip_memory2_0.s1 defaultConnection {0}
 
 # Jtag Master
-add_connection hps_only_master.master hps_0.f2h_axi_slave avalon
-set_connection_parameter_value hps_only_master.master/hps_0.f2h_axi_slave arbitrationPriority {1}
-set_connection_parameter_value hps_only_master.master/hps_0.f2h_axi_slave baseAddress {0x0000}
-set_connection_parameter_value hps_only_master.master/hps_0.f2h_axi_slave defaultConnection {0}
+#add_connection hps_only_master.master hps_0.f2h_axi_slave avalon
+#set_connection_parameter_value hps_only_master.master/hps_0.f2h_axi_slave arbitrationPriority {1}
+#set_connection_parameter_value hps_only_master.master/hps_0.f2h_axi_slave baseAddress {0x0000}
+#set_connection_parameter_value hps_only_master.master/hps_0.f2h_axi_slave defaultConnection {0}
 
 add_connection f2sdram_only_master.master hps_0.f2h_sdram0_data avalon
 set_connection_parameter_value f2sdram_only_master.master/hps_0.f2h_sdram0_data arbitrationPriority {1}
@@ -202,7 +202,7 @@ add_connection clk_0.clk lw_mm_bridge.clk clock
 add_connection clk_0.clk sysid_qsys.clk clock
 add_connection clk_0.clk jtag_uart.clk clock
 add_connection clk_0.clk onchip_memory2_0.clk1 clock
-add_connection clk_0.clk hps_only_master.clk clock
+#add_connection clk_0.clk hps_only_master.clk clock
 add_connection clk_0.clk fpga_only_master.clk clock
 add_connection clk_0.clk f2sdram_only_master.clk clock
 add_connection clk_0.clk intr_capturer_0.clock clock
@@ -216,7 +216,7 @@ add_connection clk_0.clk_reset lw_mm_bridge.reset reset
 add_connection clk_0.clk_reset sysid_qsys.reset reset
 add_connection clk_0.clk_reset jtag_uart.reset reset
 add_connection clk_0.clk_reset onchip_memory2_0.reset1 reset
-add_connection clk_0.clk_reset hps_only_master.clk_reset reset
+#add_connection clk_0.clk_reset hps_only_master.clk_reset reset
 add_connection clk_0.clk_reset fpga_only_master.clk_reset reset
 add_connection clk_0.clk_reset f2sdram_only_master.clk_reset reset
 add_connection clk_0.clk_reset intr_capturer_0.reset_sink reset
@@ -256,5 +256,5 @@ set_interface_property hps_0_f2h_stm_hw_events EXPORT_OF hps_0.f2h_stm_hw_events
 set_interconnect_requirement {$system} {qsys_mm.clockCrossingAdapter} {HANDSHAKE}
 set_interconnect_requirement {$system} {qsys_mm.maxAdditionalLatency} {0}
 set_interconnect_requirement {$system} {qsys_mm.insertDefaultSlave} {FALSE}
-set_interconnect_requirement {hps_only_master.master} {qsys_mm.security} {SECURE}
+#set_interconnect_requirement {hps_only_master.master} {qsys_mm.security} {SECURE}
 
