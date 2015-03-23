@@ -21,11 +21,6 @@ set_instance_parameter_value fpga_only_master {PLI_PORT} {50000}
 set_instance_parameter_value fpga_only_master {FAST_VER} {0}
 set_instance_parameter_value fpga_only_master {FIFO_DEPTHS} {2}
 
-#add_instance hps_only_master altera_jtag_avalon_master
-#set_instance_parameter_value hps_only_master {USE_PLI} {0}
-#set_instance_parameter_value hps_only_master {PLI_PORT} {50000}
-#set_instance_parameter_value hps_only_master {FAST_VER} {0}
-#set_instance_parameter_value hps_only_master {FIFO_DEPTHS} {2}
 
 add_instance lw_mm_bridge altera_avalon_mm_bridge
 set_instance_parameter_value lw_mm_bridge {DATA_WIDTH} {32}
@@ -80,44 +75,7 @@ set_instance_parameter_value sysid_qsys {id} {-1395321854}
 add_instance intr_capturer_0 intr_capturer
 set_instance_parameter_value intr_capturer_0 {NUM_INTR} {32}
 
-add_instance led_pio altera_avalon_pio
-set_instance_parameter_value led_pio {bitClearingEdgeCapReg} {0}
-set_instance_parameter_value led_pio {bitModifyingOutReg} {0}
-set_instance_parameter_value led_pio {captureEdge} {0}
-set_instance_parameter_value led_pio {direction} {Output}
-set_instance_parameter_value led_pio {edgeType} {RISING}
-set_instance_parameter_value led_pio {generateIRQ} {0}
-set_instance_parameter_value led_pio {irqType} {LEVEL}
-set_instance_parameter_value led_pio {resetValue} {0.0}
-set_instance_parameter_value led_pio {simDoTestBenchWiring} {0}
-set_instance_parameter_value led_pio {simDrivenValue} {0.0}
-set_instance_parameter_value led_pio {width} {8}
-
-add_instance dipsw_pio altera_avalon_pio
-set_instance_parameter_value dipsw_pio {bitClearingEdgeCapReg} {1}
-set_instance_parameter_value dipsw_pio {bitModifyingOutReg} {0}
-set_instance_parameter_value dipsw_pio {captureEdge} {1}
-set_instance_parameter_value dipsw_pio {direction} {Input}
-set_instance_parameter_value dipsw_pio {edgeType} {ANY}
-set_instance_parameter_value dipsw_pio {generateIRQ} {1}
-set_instance_parameter_value dipsw_pio {irqType} {EDGE}
-set_instance_parameter_value dipsw_pio {resetValue} {0.0}
-set_instance_parameter_value dipsw_pio {simDoTestBenchWiring} {0}
-set_instance_parameter_value dipsw_pio {simDrivenValue} {0.0}
-set_instance_parameter_value dipsw_pio {width} {4}
-
-add_instance button_pio altera_avalon_pio
-set_instance_parameter_value button_pio {bitClearingEdgeCapReg} {1}
-set_instance_parameter_value button_pio {bitModifyingOutReg} {0}
-set_instance_parameter_value button_pio {captureEdge} {1}
-set_instance_parameter_value button_pio {direction} {Input}
-set_instance_parameter_value button_pio {edgeType} {FALLING}
-set_instance_parameter_value button_pio {generateIRQ} {1}
-set_instance_parameter_value button_pio {irqType} {EDGE}
-set_instance_parameter_value button_pio {resetValue} {0.0}
-set_instance_parameter_value button_pio {simDoTestBenchWiring} {0}
-set_instance_parameter_value button_pio {simDrivenValue} {0.0}
-set_instance_parameter_value button_pio {width} {4}
+add_instance axi_bridge_for_acp_128_0 axi_bridge_for_acp_128 1.0
     
 # connections and connection parameters
 # LW Bridge
@@ -136,21 +94,6 @@ set_connection_parameter_value lw_mm_bridge.m0/jtag_uart.avalon_jtag_slave arbit
 set_connection_parameter_value lw_mm_bridge.m0/jtag_uart.avalon_jtag_slave baseAddress {0x2000}
 set_connection_parameter_value lw_mm_bridge.m0/jtag_uart.avalon_jtag_slave defaultConnection {0}
 
-add_connection lw_mm_bridge.m0 led_pio.s1 avalon
-set_connection_parameter_value lw_mm_bridge.m0/led_pio.s1 arbitrationPriority {1}
-set_connection_parameter_value lw_mm_bridge.m0/led_pio.s1 baseAddress {0x3000}
-set_connection_parameter_value lw_mm_bridge.m0/led_pio.s1 defaultConnection {0}
-
-add_connection lw_mm_bridge.m0 dipsw_pio.s1 avalon
-set_connection_parameter_value lw_mm_bridge.m0/dipsw_pio.s1 arbitrationPriority {1}
-set_connection_parameter_value lw_mm_bridge.m0/dipsw_pio.s1 baseAddress {0x4000}
-set_connection_parameter_value lw_mm_bridge.m0/dipsw_pio.s1 defaultConnection {0}
-
-add_connection lw_mm_bridge.m0 button_pio.s1 avalon
-set_connection_parameter_value lw_mm_bridge.m0/button_pio.s1 arbitrationPriority {1}
-set_connection_parameter_value lw_mm_bridge.m0/button_pio.s1 baseAddress {0x5000}
-set_connection_parameter_value lw_mm_bridge.m0/button_pio.s1 defaultConnection {0}
-
 add_connection lw_mm_bridge.m0 intr_capturer_0.avalon_slave_0 avalon
 set_connection_parameter_value lw_mm_bridge.m0/intr_capturer_0.avalon_slave_0 arbitrationPriority {1}
 set_connection_parameter_value lw_mm_bridge.m0/intr_capturer_0.avalon_slave_0 baseAddress {0x6000}
@@ -162,12 +105,6 @@ set_connection_parameter_value hps_0.h2f_axi_master/onchip_memory2_0.s1 arbitrat
 set_connection_parameter_value hps_0.h2f_axi_master/onchip_memory2_0.s1 baseAddress {0x0000}
 set_connection_parameter_value hps_0.h2f_axi_master/onchip_memory2_0.s1 defaultConnection {0}
 
-# Jtag Master
-#add_connection hps_only_master.master hps_0.f2h_axi_slave avalon
-#set_connection_parameter_value hps_only_master.master/hps_0.f2h_axi_slave arbitrationPriority {1}
-#set_connection_parameter_value hps_only_master.master/hps_0.f2h_axi_slave baseAddress {0x0000}
-#set_connection_parameter_value hps_only_master.master/hps_0.f2h_axi_slave defaultConnection {0}
-
 add_connection f2sdram_only_master.master hps_0.f2h_sdram0_data avalon
 set_connection_parameter_value f2sdram_only_master.master/hps_0.f2h_sdram0_data arbitrationPriority {1}
 set_connection_parameter_value f2sdram_only_master.master/hps_0.f2h_sdram0_data baseAddress {0x0000}
@@ -178,20 +115,17 @@ set_connection_parameter_value fpga_only_master.master/lw_mm_bridge.s0 arbitrati
 set_connection_parameter_value fpga_only_master.master/lw_mm_bridge.s0 baseAddress {0x0000}
 set_connection_parameter_value fpga_only_master.master/lw_mm_bridge.s0 defaultConnection {0}
 
+add_connection axi_bridge_for_acp_128_0.m0 hps_0.f2h_axi_slave avalon
+set_connection_parameter_value axi_bridge_for_acp_128_0.m0/hps_0.f2h_axi_slave arbitrationPriority {1}
+set_connection_parameter_value axi_bridge_for_acp_128_0.m0/hps_0.f2h_axi_slave baseAddress {0x0000}
+set_connection_parameter_value axi_bridge_for_acp_128_0.m0/hps_0.f2h_axi_slave defaultConnection {0}
+
 # IRQ
 add_connection intr_capturer_0.interrupt_receiver jtag_uart.irq interrupt
 set_connection_parameter_value intr_capturer_0.interrupt_receiver/jtag_uart.irq irqNumber {0}
-add_connection intr_capturer_0.interrupt_receiver dipsw_pio.irq interrupt
-set_connection_parameter_value intr_capturer_0.interrupt_receiver/dipsw_pio.irq irqNumber {1}
-add_connection intr_capturer_0.interrupt_receiver button_pio.irq interrupt
-set_connection_parameter_value intr_capturer_0.interrupt_receiver/button_pio.irq irqNumber {2}
 add_connection hps_0.f2h_irq0 jtag_uart.irq interrupt
 set_connection_parameter_value hps_0.f2h_irq0/jtag_uart.irq irqNumber {0}
-add_connection hps_0.f2h_irq0 dipsw_pio.irq interrupt
-set_connection_parameter_value hps_0.f2h_irq0/dipsw_pio.irq irqNumber {1}
-add_connection hps_0.f2h_irq0 button_pio.irq interrupt
-set_connection_parameter_value hps_0.f2h_irq0/button_pio.irq irqNumber {2}    
-
+    
 # Clocks
 add_connection hps_0.h2f_user1_clock hps_clk_out.clk_in clock
 add_connection clk_0.clk hps_0.f2h_sdram0_clock clock
@@ -202,27 +136,21 @@ add_connection clk_0.clk lw_mm_bridge.clk clock
 add_connection clk_0.clk sysid_qsys.clk clock
 add_connection clk_0.clk jtag_uart.clk clock
 add_connection clk_0.clk onchip_memory2_0.clk1 clock
-#add_connection clk_0.clk hps_only_master.clk clock
 add_connection clk_0.clk fpga_only_master.clk clock
 add_connection clk_0.clk f2sdram_only_master.clk clock
 add_connection clk_0.clk intr_capturer_0.clock clock
-add_connection clk_0.clk led_pio.clk clock
-add_connection clk_0.clk dipsw_pio.clk clock
-add_connection clk_0.clk button_pio.clk clock
-   
+add_connection hps_0.h2f_user0_clock axi_bridge_for_acp_128_0.clock clock
+
 # Resets
 add_connection hps_0.h2f_reset hps_clk_out.clk_in_reset reset
 add_connection clk_0.clk_reset lw_mm_bridge.reset reset
 add_connection clk_0.clk_reset sysid_qsys.reset reset
 add_connection clk_0.clk_reset jtag_uart.reset reset
 add_connection clk_0.clk_reset onchip_memory2_0.reset1 reset
-#add_connection clk_0.clk_reset hps_only_master.clk_reset reset
 add_connection clk_0.clk_reset fpga_only_master.clk_reset reset
 add_connection clk_0.clk_reset f2sdram_only_master.clk_reset reset
 add_connection clk_0.clk_reset intr_capturer_0.reset_sink reset
-add_connection clk_0.clk_reset button_pio.reset reset
-add_connection clk_0.clk_reset dipsw_pio.reset reset
-add_connection clk_0.clk_reset led_pio.reset reset
+add_connection clk_0.clk_reset axi_bridge_for_acp_128_0.reset reset
 
 # exported interfaces
 add_interface hps_0_h2f_clk clock source
@@ -233,28 +161,12 @@ add_interface hps_0_hps_io conduit end
 set_interface_property hps_0_hps_io EXPORT_OF hps_0.hps_io
 add_interface memory conduit end
 set_interface_property memory EXPORT_OF hps_0.memory
-add_interface led_pio conduit end
-set_interface_property led_pio EXPORT_OF led_pio.external_connection
-add_interface dipsw_pio conduit end
-set_interface_property dipsw_pio EXPORT_OF dipsw_pio.external_connection
-add_interface button_pio conduit end
-set_interface_property button_pio EXPORT_OF button_pio.external_connection
 add_interface clk clock sink
 set_interface_property clk EXPORT_OF clk_0.clk_in
 add_interface reset reset sink
 set_interface_property reset EXPORT_OF clk_0.clk_in_reset
-add_interface hps_0_f2h_cold_reset_req reset sink
-set_interface_property hps_0_f2h_cold_reset_req EXPORT_OF hps_0.f2h_cold_reset_req
-add_interface hps_0_f2h_debug_reset_req reset sink
-set_interface_property hps_0_f2h_debug_reset_req EXPORT_OF hps_0.f2h_debug_reset_req
-add_interface hps_0_f2h_warm_reset_req reset sink
-set_interface_property hps_0_f2h_warm_reset_req EXPORT_OF hps_0.f2h_warm_reset_req
-add_interface hps_0_f2h_stm_hw_events conduit end
-set_interface_property hps_0_f2h_stm_hw_events EXPORT_OF hps_0.f2h_stm_hw_events
 
 # interconnect requirements
 set_interconnect_requirement {$system} {qsys_mm.clockCrossingAdapter} {HANDSHAKE}
 set_interconnect_requirement {$system} {qsys_mm.maxAdditionalLatency} {0}
 set_interconnect_requirement {$system} {qsys_mm.insertDefaultSlave} {FALSE}
-#set_interconnect_requirement {hps_only_master.master} {qsys_mm.security} {SECURE}
-

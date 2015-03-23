@@ -505,5 +505,16 @@ proc add_hps {} {
     set_instance_parameter_value hps_0 {FPGA_PERIPHERAL_OUTPUT_CLOCK_FREQ_I2C1_CLK} {100}
     set_instance_parameter_value hps_0 {FPGA_PERIPHERAL_OUTPUT_CLOCK_FREQ_I2C2_CLK} {100}
     set_instance_parameter_value hps_0 {FPGA_PERIPHERAL_OUTPUT_CLOCK_FREQ_I2C3_CLK} {100}
+    
+    #HPS Exports
+    add_interface hps_0_f2h_cold_reset_req reset sink
+    set_interface_property hps_0_f2h_cold_reset_req EXPORT_OF hps_0.f2h_cold_reset_req
+    add_interface hps_0_f2h_debug_reset_req reset sink
+    set_interface_property hps_0_f2h_debug_reset_req EXPORT_OF hps_0.f2h_debug_reset_req
+    add_interface hps_0_f2h_warm_reset_req reset sink
+    set_interface_property hps_0_f2h_warm_reset_req EXPORT_OF hps_0.f2h_warm_reset_req
+    
+    add_interface hps_0_f2h_stm_hw_events conduit end
+    set_interface_property hps_0_f2h_stm_hw_events EXPORT_OF hps_0.f2h_stm_hw_events
 }
 
