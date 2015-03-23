@@ -1,5 +1,5 @@
 # 50MHz board input clock
-create_clock -period 20 [get_ports fpga_clk_50]
+create_clock -period 20 [get_ports fpga_clk1_50]
 
 # for enhancing USB BlasterII to be reliable, 25MHz
 create_clock -name {altera_reserved_tck} -period 40 {altera_reserved_tck}
@@ -18,6 +18,12 @@ set_false_path -from * -to [get_ports {fpga_led_pio[0]}]
 set_false_path -from * -to [get_ports {fpga_led_pio[1]}]
 set_false_path -from * -to [get_ports {fpga_led_pio[2]}]
 set_false_path -from * -to [get_ports {fpga_led_pio[3]}]
+set_false_path -from * -to [get_ports {fpga_led_pio[4]}]
+set_false_path -from * -to [get_ports {fpga_led_pio[5]}]
+set_false_path -from * -to [get_ports {fpga_led_pio[6]}]
+set_false_path -from * -to [get_ports {fpga_led_pio[7]}]
+set_false_path -from [get_ports {fpga_key_pio[0]}] -to *
+set_false_path -from [get_ports {fpga_key_pio[1]}] -to *
 
 # HPS peripherals port false path setting to workaround the unconstraint path (setting false_path for hps_0 ports will not affect the routing as it is hard silicon)
 set_false_path -from * -to [get_ports {hps_emac1_TX_CLK}] 
@@ -34,6 +40,9 @@ set_false_path -from * -to [get_ports {hps_usb1_STP}]
 set_false_path -from * -to [get_ports {hps_spim0_CLK}] 
 set_false_path -from * -to [get_ports {hps_spim0_MOSI}] 
 set_false_path -from * -to [get_ports {hps_spim0_SS0}] 
+set_false_path -from * -to [get_ports {hps_spim1_CLK}] 
+set_false_path -from * -to [get_ports {hps_spim1_MOSI}] 
+set_false_path -from * -to [get_ports {hps_spim1_SS0}]
 set_false_path -from * -to [get_ports {hps_uart0_TX}] 
 set_false_path -from * -to [get_ports {hps_can0_TX}] 
 set_false_path -from * -to [get_ports {hps_trace_CLK}] 
@@ -66,12 +75,15 @@ set_false_path -from * -to [get_ports {hps_usb1_D6}]
 set_false_path -from * -to [get_ports {hps_usb1_D7}] 
 set_false_path -from * -to [get_ports {hps_i2c0_SDA}] 
 set_false_path -from * -to [get_ports {hps_i2c0_SCL}] 
+set_false_path -from * -to [get_ports {hps_i2c1_SDA}] 
+set_false_path -from * -to [get_ports {hps_i2c1_SCL}] 
 set_false_path -from * -to [get_ports {hps_gpio_GPIO09}] 
 set_false_path -from * -to [get_ports {hps_gpio_GPIO35}] 
 set_false_path -from * -to [get_ports {hps_gpio_GPIO41}] 
 set_false_path -from * -to [get_ports {hps_gpio_GPIO42}] 
 set_false_path -from * -to [get_ports {hps_gpio_GPIO43}] 
-set_false_path -from * -to [get_ports {hps_gpio_GPIO44}] 
+set_false_path -from * -to [get_ports {hps_gpio_GPIO44}]
+set_false_path -from * -to [get_ports hps_spim1_MISO}] 
 
 set_false_path -from [get_ports {hps_emac1_MDIO}] -to *
 set_false_path -from [get_ports {hps_qspi_IO0}] -to *
@@ -93,6 +105,8 @@ set_false_path -from [get_ports {hps_usb1_D6}] -to *
 set_false_path -from [get_ports {hps_usb1_D7}] -to *
 set_false_path -from [get_ports {hps_i2c0_SDA}] -to *
 set_false_path -from [get_ports {hps_i2c0_SCL}] -to *
+set_false_path -from [get_ports {hps_i2c1_SDA}] -to *
+set_false_path -from [get_ports {hps_i2c1_SCL}] -to *
 set_false_path -from [get_ports {hps_gpio_GPIO09}] -to *
 set_false_path -from [get_ports {hps_gpio_GPIO35}] -to *
 set_false_path -from [get_ports {hps_gpio_GPIO41}] -to *
@@ -110,11 +124,14 @@ set_false_path -from [get_ports {hps_usb1_CLK}] -to *
 set_false_path -from [get_ports {hps_usb1_DIR}] -to *
 set_false_path -from [get_ports {hps_usb1_NXT}] -to *
 set_false_path -from [get_ports {hps_spim0_MISO}] -to *
+set_false_path -from [get_ports {hps_spim1_MISO}] -to *
+set_false_path -from [get_ports {hps_spim1_SS0}] -to *
 set_false_path -from [get_ports {hps_uart0_RX}] -to *
 set_false_path -from [get_ports {hps_can0_RX}] -to *
 
 # create unused clock constraint for HPS I2C and usb1 to avoid misleading unconstraint clock reporting in TimeQuest
 create_clock -period "1 MHz" [get_ports hps_i2c0_SCL]
+create_clock -period "1 MHz" [get_ports hps_i2c1_SCL]
 create_clock -period "48 MHz" [get_ports hps_usb1_CLK]
 
 
