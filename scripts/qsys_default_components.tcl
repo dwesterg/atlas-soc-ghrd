@@ -130,7 +130,7 @@ set_connection_parameter_value hps_0.f2h_irq0/jtag_uart.irq irqNumber {0}
 add_connection hps_0.h2f_user1_clock hps_clk_out.clk_in clock
 add_connection clk_0.clk hps_0.f2h_sdram0_clock clock
 add_connection clk_0.clk hps_0.h2f_axi_clock clock
-add_connection clk_0.clk hps_0.f2h_axi_clock clock
+add_connection hps_0.h2f_user0_clock hps_0.f2h_axi_clock clock
 add_connection clk_0.clk hps_0.h2f_lw_axi_clock clock
 add_connection clk_0.clk lw_mm_bridge.clk clock
 add_connection clk_0.clk sysid_qsys.clk clock
