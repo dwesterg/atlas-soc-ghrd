@@ -1,20 +1,35 @@
 package provide adc_toolkit 0.1
 package require Tcl 8.5
-package require math::fourier
+puts [pwd]
+  #load the fpga
+#set device_index 0 ; #Device index for target usually this is 0
+#set device [lindex [get_service_paths device] $device_index]
+  # this assume that sytem-console was launched within the quartus project directory
+#set sof_path soc_system.sof
+#device_download_sof $device $sof_path
 
-puts [set m [lindex [ get_service_paths master ] 0]]
+
+puts [set m [lindex [ get_service_paths master ] 1]]
 #set a bunch of defines so we can easily change them.
-set SGDMA_TO_FFT_CSR_BASE  0x80000
-set SGDMA_TO_FFT_DESCRIPTOR_SLAVE_BASE  0x90000
-set SGDMA_FROM_FFT_CSR_BASE  0xA0000
-set SGDMA_FROM_FFT_DESCRIPTOR_SLAVE_BASE 0xB0000
-set DATA_BASE 0xC0000
-set RESULT_BASE 0xC2000
-set FFT_CSR 0xD0000
+#set SGDMA_TO_FFT_CSR_BASE  0x80000
+#set SGDMA_TO_FFT_DESCRIPTOR_SLAVE_BASE  0x90000
+#set SGDMA_FROM_FFT_CSR_BASE  0xA0000
+#set SGDMA_FROM_FFT_DESCRIPTOR_SLAVE_BASE 0xB0000
+#set DATA_BASE 0xC0000
+#set RESULT_BASE 0xC2000
+#set FFT_CSR 0xD0000
+set SGDMA_TO_FFT_CSR_BASE  0x100000
+set SGDMA_TO_FFT_DESCRIPTOR_SLAVE_BASE  0x110000
+set SGDMA_FROM_FFT_CSR_BASE  0x120000
+set SGDMA_FROM_FFT_DESCRIPTOR_SLAVE_BASE 0x130000
+set DATA_BASE 0x140000
+set RESULT_BASE 0x148000
+set FFT_CSR 0x150000
+
 set DMA_DATA_BASE 0x40000
-set DMA_RESULT_BASE 0x42000
+set DMA_RESULT_BASE 0x48000
 set sample_size 128
-set sample_list { 128 256 512 1024 2048}
+set sample_list { 128 256 512 1024 2048 4096}
 set triangle_list { 0 256 512 768 1024 1280 1536 1792 2048 1792 1536 1280 1024 768 512 256 0 -256 -512 -768 -1024 -1280 -1536 -1792 -2048 -1792 -1536 -1280 -1024 -768 -512 -256 }
 open_service master $m
 
@@ -155,16 +170,16 @@ proc fft_wave {  waveform } {
 	for {set i 0} {$i < $sample_size} {incr i} {
 	  if {$waveform==0} {
 # make small spikes  should give a sinx/x wave form. if I remember my DSP well
-	    set temp [expr (((($i%32)<16) * 0xffff) - 0x8000)<<16] 
+	    set temp [expr (((($i%32)<16) * 0xffff) - 0x8000)] 
 	  }
 	  if {$waveform==1} {
-	    set temp [ expr  int((( sin(2.0*3.1415* $i/16.0)*0x7fff)))<<16 ]
+	    set temp [ expr  int((( sin(2.0*3.1415* $i/16.0)*0x7fff))) ]
 	  }
 	  master_write_32 $m [expr $DATA_BASE + ($i * 4)] $temp
 	  
 	  if {$waveform==2} {
 	    set value [lindex $triangle_list [expr $i % 32]]
-	    set temp [ expr  ($value * 15)<<16 ]
+	    set temp [ expr  ($value * 15) ]
 	  }
 	  master_write_32 $m [expr $DATA_BASE + ($i * 4)] $temp
 	}
@@ -179,18 +194,19 @@ proc fft_wave {  waveform } {
       master_write_32 $m [expr $SGDMA_TO_FFT_DESCRIPTOR_SLAVE_BASE + 4 ] 0
       master_write_32 $m [expr $SGDMA_TO_FFT_DESCRIPTOR_SLAVE_BASE + 8 ] [expr $sample_size *4 ]
       master_write_32 $m [expr $SGDMA_TO_FFT_DESCRIPTOR_SLAVE_BASE + 0xc ] 0x80000300
+      
 
       master_write_32 $m [expr $SGDMA_FROM_FFT_DESCRIPTOR_SLAVE_BASE + 0 ] 0
       master_write_32 $m [expr $SGDMA_FROM_FFT_DESCRIPTOR_SLAVE_BASE + 4 ] $DMA_RESULT_BASE
       master_write_32 $m [expr $SGDMA_FROM_FFT_DESCRIPTOR_SLAVE_BASE + 8 ] [expr $sample_size *8 ]
       master_write_32 $m [expr $SGDMA_FROM_FFT_DESCRIPTOR_SLAVE_BASE + 0xc ] 0x80001000
+      
       set y0 [master_read_32 $m $DATA_BASE  $sample_size]
-
 #format up the arrays.
       foreach element $y0 {
 	lappend view_data $index
 	# upper 16 bit are the real onse so we need to whift it down. 
-	set element [expr $element >>16 ]
+	#set element [expr $element >>16 ]
 	lappend view_data $element
 #need to sign extend.
 	if {$element & 0x8000} {
