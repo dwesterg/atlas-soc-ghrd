@@ -1,9 +1,10 @@
+echo ---Booting ATLAS SOC GHRD---
 echo ---Programming FPGA---
-fatload mmc 0:1 $fpgadata DE0_NANO_SOC/output_files/DE0_NANO_SOC.rbf;
+fatload mmc 0:1 $fpgadata ATLAS_SOC_GHRD/output_files/ATLAS_SOC_GHRD.rbf;
 fpga load 0 $fpgadata $filesize;
 
 echo ---Setting Env variables---
-set fdtimage DE0_NANO_SOC/soc_system.dtb;
+set fdtimage ATLAS_SOC_GHRD/soc_system.dtb;
 setenv bootimage zImage
 
 echo ---Booting Linux---
