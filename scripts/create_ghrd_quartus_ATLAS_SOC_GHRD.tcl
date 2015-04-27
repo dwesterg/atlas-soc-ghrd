@@ -370,7 +370,7 @@ set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hps_gpio_GPIO53
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hps_gpio_GPIO54
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hps_gpio_GPIO61
 
-set_global_assignment -name ENABLE_SIGNALTAP ON
-set_global_assignment -name USE_SIGNALTAP_FILE ../hdl_src/fft_msgdma.stp
-set_global_assignment -name SIGNALTAP_FILE ../hdl_src/fft_msgdma.stp
-set_global_assignment -name SIGNALTAP_FILE ../hdl_src/validator.stp
+#set_global_assignment -name ENABLE_SIGNALTAP ON
+#set_global_assignment -name USE_SIGNALTAP_FILE ../hdl_src/fft_msgdma.stp
+#set_global_assignment -name SIGNALTAP_FILE ../hdl_src/fft_msgdma.stp
+#set_global_assignment -name SIGNALTAP_FILE ../hdl_src/validator.stp
