@@ -164,7 +164,10 @@ ALL_DEPS_$1 += $1/u-boot.img $1/preloader-mkpimage.bin
 ALL_DEPS_$1 += $$(QUARTUS_JDI_$1) $$(QSYS_SOPCINFO_$1) $$(QSYS_FILE_$1)
 ALL_DEPS_$1 += $1/hps_isw_handoff $1/$1.qpf $1/$1.qsf
 
-SD_FAT_$1 += $$(ALL_DEPS_$1)
+#SD_FAT_$1 += $$(ALL_DEPS_$1)
+SD_FAT_$1 += $$(QUARTUS_RBF_$1) $$(QUARTUS_SOF_$1)
+SD_FAT_$1 += $$(DEVICE_TREE_SOURCE_$1) $$(DEVICE_TREE_BLOB_$1)
+SD_FAT_$1 += $1/u-boot.img $1/preloader-mkpimage.bin
 SD_FAT_$1 += boot.script u-boot.scr
 
 .PHONY:$1.all
@@ -187,11 +190,11 @@ include mks/bootscript.mk
 
 SD_FAT_TGZ := sd_fat.tar.gz
 
-SD_FAT_TGZ_DEPS += $(foreach r,$(REVISION_LIST),$(ALL_DEPS_$r))
+SD_FAT_TGZ_DEPS += $(foreach r,$(REVISION_LIST),$(SD_FAT_$r))
 SD_FAT_TGZ_DEPS += boot.script u-boot.scr
-SD_FAT_TGZ_DEPS += hdl_src
-SD_FAT_TGZ_DEPS += board_info
-SD_FAT_TGZ_DEPS += ip
+#SD_FAT_TGZ_DEPS += hdl_src
+#SD_FAT_TGZ_DEPS += board_info
+#SD_FAT_TGZ_DEPS += ip
 
 $(SD_FAT_TGZ): $(SD_FAT_TGZ_DEPS)
 	@$(RM) $@
