@@ -14,6 +14,9 @@ set_instance_parameter_value irq_bridge_0 {IRQ_N} {0}
 add_connection hps_0.f2h_irq0 irq_bridge_0.sender0_irq interrupt
 set_connection_parameter_value hps_0.f2h_irq0/irq_bridge_0.sender0_irq irqNumber {6}
 
+add_connection intr_capturer_0.interrupt_receiver irq_bridge_0.sender0_irq interrupt
+set_connection_parameter_value intr_capturer_0.interrupt_receiver/irq_bridge_0.sender0_irq irqNumber {6}
+
 # Clocks
 add_connection hps_0.h2f_user0_clock irq_bridge_0.clk clock
 

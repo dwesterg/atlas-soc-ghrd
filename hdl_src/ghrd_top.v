@@ -115,7 +115,7 @@ wire [27:0] 	stm_hw_events;
 wire [1:0] fpga_debounced_buttons;
 wire [7:0] fpga_led_internal;
 
-wire [66:0]] loan_io_in;
+wire [66:0] loan_io_in;
 wire adc_irq;
 
 //assignments
@@ -226,7 +226,7 @@ soc_system soc_inst (
   .hps_0_hps_io_hps_io_gpio_inst_LOANIO61 (hps_gpio_GPIO61),
 
   // ADC IRQ
-  .adc_irq_irq                           (adc_irq)
+  .adc_irq_irq                           (adc_irq),
 
   //PIOs
   .button_pio_export                     (fpga_debounced_buttons),
