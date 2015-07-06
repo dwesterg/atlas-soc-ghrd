@@ -181,12 +181,11 @@
 <DTAppend name="#interrupt-cells" type="number" parentlabel="adxl345" val="2" />
 <DTAppend name="compatible" type="string" parentlabel="adxl345" val="adi,adxl34x" />
 <DTAppend name="reg" parentlabel="adxl345" type="number" val="0x53" />
-<DTAppend name="interrupt-controller" parentlabel="adxl345" />
 <DTAppend name="interrupt-parent" parentlabel="adxl345" >
-<val type="phandle">hps_0_gpio2_porta</val>
+<val type="phandle">hps_0_arm_gic_0</val>
 </DTAppend>
 <DTAppend name="interrupts" parentlabel="adxl345" >
-<val type="number">2</val>
+<val type="number">46</val>
 <val type="number">4</val>
 </DTAppend>
 
