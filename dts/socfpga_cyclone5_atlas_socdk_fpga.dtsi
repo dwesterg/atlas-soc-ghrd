@@ -1,0 +1,225 @@
+/*
+ * Copyright Altera Corporation (C) 2014. All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms and conditions of the GNU General Public License,
+ * version 2, as published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+ * more details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+/ {
+	soc {
+
+		clocks {
+			#clock-cells = <0>;
+			
+			clk_0: clk_0 {
+				compatible = "fixed-clock";	
+				clock-frequency = <50000000>;
+			};
+			
+			fft_sub_clk_0: fft_sub_clk_0 {
+				compatible = "fixed-clock";
+				clock-frequency = <100000000>;
+			}; 
+						
+		};
+
+		hps_0_bridges: bridge@0xc0000000 {
+			compatible = "altr,bridge-15.0", "simple-bus";
+			reg = <0xc0000000 0x20000000>,
+				<0xff200000 0x00200000>;
+			reg-names = "axi_h2f", "axi_h2f_lw";
+			clocks = <&clk_0 &clk_0 &clk_0>;
+			clock-names = "h2f_axi_clock", "h2f_lw_axi_clock", "f2h_sdram0_clock";
+			#address-cells = <2>;
+			#size-cells = <1>;
+			
+			ranges = <0x00000000 0x00000000 0xc0000000 0x00010000>,
+				<0x00000001 0x00002000 0xff202000 0x00000008>,
+				<0x00000001 0x00001000 0xff201000 0x00000008>,
+				<0x00000001 0x00003000 0xff203000 0x00000010>,
+				<0x00000001 0x00004000 0xff204000 0x00000010>,
+				<0x00000001 0x00005000 0xff205000 0x00000010>,
+				<0x00000001 0x000a0000 0xff2a0000 0x00000020>,
+				<0x00000001 0x00080000 0xff280000 0x00000020>,
+				<0x00000001 0x000a8000 0xff2a8000 0x00000020>,
+				<0x00000001 0x000b0000 0xff2b0000 0x00000010>,
+				<0x00000001 0x00090000 0xff290000 0x00000010>,
+				<0x00000001 0x000b8000 0xff2b8000 0x00000010>,
+				<0x00000001 0x000d0000 0xff2d0000 0x00000010>,
+				<0x00000001 0x000c0000 0xff2c0000 0x00010000>;
+			
+			jtag_uart: serial@0x100002000 {
+				compatible = "altr,juart-15.0", "altr,juart-1.0";
+				reg = <0x00000001 0x00002000 0x00000008>;
+				interrupts = <0 40 4>;
+				clocks = <&clk_0>;
+			};
+			
+			led_pio: gpio@0x100003000 {
+				compatible = "altr,pio-15.0", "altr,pio-1.0";
+				reg = <0x00000001 0x00003000 0x00000010>;
+				clocks = <&clk_0>;
+				altr,gpio-bank-width = <8>;
+				resetvalue = <0>;
+				#gpio-cells = <2>;
+				gpio-controller;
+			}; //end gpio@0x100003000 (led_pio)
+			
+			sysid_qsys: sysid@0x100001000 {
+				compatible = "altr,sysid-15.0", "altr,sysid-1.0";
+				reg = <0x00000001 0x00001000 0x00000008>;
+				clocks = <&clk_0>;
+				id = <2899645442>;
+				timestamp = <1431101685>;
+			};
+			
+			dipsw_pio: gpio@0x100004000 {
+				compatible = "altr,pio-15.0", "altr,pio-1.0";
+				reg = <0x00000001 0x00004000 0x00000010>;
+				interrupts = <0 41 1>;
+				clocks = <&clk_0>;
+				altr,gpio-bank-width = <4>;
+				altr,interrupt_type = <3>;
+				edge_type = <2>;
+				level_trigger = <0>;
+				resetvalue = <0>;
+				#gpio-cells = <2>;
+				gpio-controller;
+			}; 
+			
+			button_pio: gpio@0x100005000 {
+				compatible = "altr,pio-15.0", "altr,pio-1.0";
+				reg = <0x00000001 0x00005000 0x00000010>;
+				interrupts = <0 42 1>;
+				clocks = <&clk_0>;
+				altr,gpio-bank-width = <2>;
+				altr,interrupt_type = <2>;
+				edge_type = <1>;
+				level_trigger = <0>;
+				resetvalue = <0>;	
+				#gpio-cells = <2>;
+				gpio-controller;
+			};
+			
+			fft_sub_sgdma_from_fft: msgdma@0x1000a0000 {
+				compatible = "altr,msgdma-15.0", "altr,msgdma-1.0";
+				reg = <0x00000001 0x000a0000 0x00000020>,
+					<0x00000001 0x000b0000 0x00000010>;
+				reg-names = "csr", "descriptor_slave";
+				interrupts = <0 43 4>;
+				clocks = <&fft_sub_clk_0>;
+			}; 
+
+			fft_sub_sgdma_to_fft: msgdma@0x100080000 {
+				compatible = "altr,msgdma-15.0", "altr,msgdma-1.0";
+				reg = <0x00000001 0x00080000 0x00000020>,
+					<0x00000001 0x00090000 0x00000010>;
+				reg-names = "csr", "descriptor_slave";
+				interrupts = <0 44 4>;
+				clocks = <&fft_sub_clk_0>;
+			}; 
+
+			fft_sub_sgdma_from_ram: msgdma@0x1000a8000 {
+				compatible = "altr,msgdma-15.0", "altr,msgdma-1.0";
+				reg = <0x00000001 0x000a8000 0x00000020>,
+					<0x00000001 0x000b8000 0x00000010>;
+				reg-names = "csr", "descriptor_slave";
+				interrupts = <0 45 4>;
+				clocks = <&fft_sub_clk_0>;
+			}; 
+
+			fft_sub_FFT_STadapter_0: fft_stadapter@0x1000d0000 {
+				compatible = "altr,fft_stadapter-1.1", "altr,fft_stadapter";
+				reg = <0x00000001 0x000d0000 0x00000010>;
+				clocks = <&fft_sub_clk_0>;
+			}; 
+		};
+		
+		leds {
+			compatible = "gpio-leds";
+
+			led_fpga0: fpga0 {
+				label = "fpga_led0";
+				gpios = <&led_pio 0 0>;
+			}; //end fpga0 (led_fpga0)
+
+			led_fpga1: fpga1 {
+				label = "fpga_led1";
+				gpios = <&led_pio 1 0>;
+			}; //end fpga1 (led_fpga1)
+
+			led_fpga2: fpga2 {
+				label = "fpga_led2";
+				gpios = <&led_pio 2 0>;
+			}; //end fpga2 (led_fpga2)
+
+			led_fpga3: fpga3 {
+				label = "fpga_led3";
+				gpios = <&led_pio 3 0>;
+			}; //end fpga3 (led_fpga3)
+
+			led_fpga4: fpga4 {
+				label = "fpga_led4";
+				gpios = <&led_pio 4 0>;
+			}; //end fpga4 (led_fpga4)
+
+			led_fpga5: fpga5 {
+				label = "fpga_led5";
+				gpios = <&led_pio 5 0>;
+			}; //end fpga5 (led_fpga5)
+
+			led_fpga6: fpga6 {
+				label = "fpga_led6";
+				gpios = <&led_pio 6 0>;
+			}; //end fpga6 (led_fpga6)
+
+			led_fpga7: fpga7 {
+				label = "fpga_led7";
+				gpios = <&led_pio 7 0>;
+			}; //end fpga7 (led_fpga7)
+
+
+		};
+		
+		keys {
+			compatible = "gpio-keys";
+
+			sw0: sw0 {
+				label = "sw0";
+				gpios = <&dipsw_pio 0 1>;
+				linux,code = <64>;
+				debounce-interval = <50>;
+			};
+
+			sw1: sw1 {
+				label = "sw1";
+				gpios = <&dipsw_pio 1 1>;
+				linux,code = <65>;
+				debounce-interval = <50>;
+			};
+
+			sw2: sw2 {
+				label = "sw2";
+				gpios = <&dipsw_pio 2 1>;
+				linux,code = <66>;
+				debounce-interval = <50>;
+			};
+
+			sw3: sw3 {
+				label = "sw3";
+				gpios = <&dipsw_pio 3 1>;
+				linux,code = <67>;
+				debounce-interval = <50>;
+			};
+		};
+	};
+};

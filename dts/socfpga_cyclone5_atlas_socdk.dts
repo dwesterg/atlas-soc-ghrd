@@ -1,0 +1,124 @@
+/*
+ * Copyright Altera Corporation (C) 2014. All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms and conditions of the GNU General Public License,
+ * version 2, as published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+ * more details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+/dts-v1/;
+/include/ "socfpga.dtsi"
+/include/ "socfpga_cyclone5_atlas_socdk_fpga.dtsi"
+
+/ {
+	model = "Atlas-SoC Cyclone V GHRD";
+	compatible = "altr,socfpga-cyclone5", "altr,socfpga";
+
+	chosen {
+		bootargs = "console=ttyS0,115200 root=/dev/mmcblk0p2 rw rootwait";
+	};
+
+	memory {
+		name = "memory";
+		device_type = "memory";
+		reg = <0x0 0x80000000>; 
+	};
+
+	aliases {
+		/* this allow the ethaddr uboot environmnet variable contents
+		 * to be added to the gmac1 device tree blob.
+		 */
+		ethernet0 = &gmac1;
+	};
+
+	soc {
+		
+		clkmgr@ffd04000 {
+			clocks {
+				osc1 {
+					clock-frequency = <25000000>;
+				};
+				osc2 {
+					clock-frequency = <25000000>;
+				};
+			};
+		};
+
+		dwmmc0@ff704000 {
+			num-slots = <1>;
+			supports-highspeed;
+			broken-cd;
+			altr,dw-mshc-ciu-div = <3>;
+			altr,dw-mshc-sdr-timing = <0 3>;
+
+			slot@0 {
+				reg = <0>;
+				bus-width = <4>;
+			};
+		};
+
+		ethernet@ff702000 {
+			phy-mode = "rgmii";
+			phy-addr = <0xffffffff>; /* probe for phy addr */
+			status = "okay";
+		};
+
+		gpio@ff708000 {
+			status = "okay";
+		};
+
+		gpio@ff709000 {
+			status = "okay";
+		};
+
+		gpio@ff70a000 {
+			status = "okay";
+		};
+
+		i2c0: i2c@ffc04000 {
+			speed-mode = <0>;
+			status = "okay";
+			
+			adxl345: adxl345@0 {
+				compatible = "adxl34x";
+				reg = <0x53>;
+				interrupt-parent = <&intc>;
+				interrupts = <46 2 4>;
+			};
+		};
+
+		serial0@ffc02000 {
+			status = "okay";
+		};
+
+		sysmgr@ffd08000 {
+			cpu1-start-addr = <0xffd080c4>;
+		};
+
+		usb1: usb@ffb40000 {
+			status = "okay";
+		};
+
+		watchdog0: wd@ffd02000 {
+			status = "okay";
+		};
+		
+		leds {
+			compatible = "gpio-leds";
+			hps0 {
+				label = "hps_led0";
+				gpios = <&gpio1 24 1>;
+				linux,default-trigger = "heartbeat";
+			};
+
+		};
+	};
+};
