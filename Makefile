@@ -194,6 +194,7 @@ SD_FAT_TGZ := sd_fat.tar.gz
 SD_FAT_TGZ_DEPS += $(foreach r,$(REVISION_LIST),$(SD_FAT_$r))
 SD_FAT_TGZ_DEPS += boot.script u-boot.scr
 SD_FAT_TGZ_DEPS += socfpga_cyclone5_atlas_socdk.dtb
+SD_FAT_TGZ_DEPS += dts
 #SD_FAT_TGZ_DEPS += hdl_src
 #SD_FAT_TGZ_DEPS += board_info
 #SD_FAT_TGZ_DEPS += ip
