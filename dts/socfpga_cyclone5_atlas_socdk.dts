@@ -91,7 +91,7 @@
 				compatible = "adxl34x";
 				reg = <0x53>;
 				interrupt-parent = <&intc>;
-				interrupts = <46 2 4>;
+				interrupts = <0 46 4>;
 			};
 		};
 
