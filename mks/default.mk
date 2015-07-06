@@ -27,6 +27,8 @@ SBT.GENERATE := bsp-generate-files
 
 DTS.SOPC2DTS := sopc2dts
 
+DTS.DTC := dtc
+
 # Helpful Macros
 SPACE := $(empty) $(empty)
 
