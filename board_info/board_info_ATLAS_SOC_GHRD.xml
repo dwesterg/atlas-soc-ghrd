@@ -185,8 +185,8 @@
 <val type="phandle">hps_0_arm_gic_0</val>
 </DTAppend>
 <DTAppend name="interrupts" parentlabel="adxl345" >
+<val type="number">0</val>
 <val type="number">46</val>
-<val type="number">2</val>
 <val type="number">4</val>
 </DTAppend>
 
