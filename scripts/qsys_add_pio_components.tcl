@@ -38,7 +38,7 @@ set_instance_parameter_value button_pio {irqType} {EDGE}
 set_instance_parameter_value button_pio {resetValue} {0.0}
 set_instance_parameter_value button_pio {simDoTestBenchWiring} {0}
 set_instance_parameter_value button_pio {simDrivenValue} {0.0}
-set_instance_parameter_value button_pio {width} {4}
+set_instance_parameter_value button_pio {width} {2}
 
 # connections and connection parameters
 # LW Bridge
