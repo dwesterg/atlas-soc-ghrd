@@ -65,7 +65,6 @@ AR_REGEX += $(SCRIPT_DIR)
 AR_REGEX += board_info
 AR_REGEX += hdl_src
 AR_REGEX += utils
-AR_REGEX += dts
 AR_REGEX += boot.script
 AR_REGEX += buildroot.defconfig
 

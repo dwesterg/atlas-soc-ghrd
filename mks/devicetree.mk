@@ -36,5 +36,3 @@ endef # build_dts_revisions
 
 $(foreach r, $(REVISION_LIST), $(eval $(call build_dts_revisions,$r)))
 
-socfpga_cyclone5_atlas_socdk.dtb: dts/socfpga_cyclone5_atlas_socdk.dts
-	$(DTS.DTC) -I dts -O dtb -o $@ $<
