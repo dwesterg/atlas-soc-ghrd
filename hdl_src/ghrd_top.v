@@ -115,9 +115,6 @@ wire [27:0] 	stm_hw_events;
 wire [1:0] fpga_debounced_buttons;
 wire [7:0] fpga_led_internal;
 
-wire [66:0] loan_io_in;
-wire adc_irq;
-
 //assignments
 assign stm_hw_events    = {{14{1'b0}}, fpga_dipsw_pio, fpga_led_internal, fpga_debounced_buttons};
 
@@ -128,7 +125,6 @@ assign gpio_0 = 36'hZZZZZZZZZ;
 assign gpio_1 = 36'hZZZZZZZZZ;
 assign fpga_led_pio = fpga_led_internal;
 
-assign adc_irq = loan_io_in[61];
 
 // SoC sub-system module
 soc_system soc_inst (
@@ -214,20 +210,11 @@ soc_system soc_inst (
   .hps_0_hps_io_hps_io_gpio_inst_GPIO40  (hps_gpio_GPIO40),
   .hps_0_hps_io_hps_io_gpio_inst_GPIO53  (hps_gpio_GPIO53),
   .hps_0_hps_io_hps_io_gpio_inst_GPIO54  (hps_gpio_GPIO54),
-//  .hps_0_hps_io_hps_io_gpio_inst_GPIO61  (hps_gpio_GPIO61), 
+  .hps_0_hps_io_hps_io_gpio_inst_GPIO61  (hps_gpio_GPIO61), 
   
   //STM
   .hps_0_f2h_stm_hw_events_stm_hwevents  (stm_hw_events),  
  
-  // Loan IO
-  .hps_0_h2f_loan_io_in                   (loan_io_in),
-  .hps_0_h2f_loan_io_out                  (67'h0),
-  .hps_0_h2f_loan_io_oe                   (67'h0),
-  .hps_0_hps_io_hps_io_gpio_inst_LOANIO61 (hps_gpio_GPIO61),
-
-  // ADC IRQ
-  .adc_irq_irq                           (adc_irq),
-
   //PIOs
   .button_pio_export                     (fpga_debounced_buttons),
   .dipsw_pio_export                      (fpga_dipsw_pio),
