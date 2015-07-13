@@ -1,13 +1,21 @@
 echo ---Booting ATLAS SOC GHRD---
 echo ---Programming FPGA---
+# Load rbf from FAT partition into memory
 fatload mmc 0:1 $fpgadata ATLAS_SOC_GHRD/output_files/ATLAS_SOC_GHRD.rbf;
+# Program FPGA
 fpga load 0 $fpgadata $filesize;
 
 echo ---Setting Env variables---
+# Set the devicetree image to be used
 setenv fdtimage socfpga_cyclone5_atlas_socdk.dtb;
+# Set the kernel image to be used
 setenv bootimage zImage;
 
 echo ---Booting Linux---
+# enable the FPGA 2 HPS and HPS 2 FPGA bridges
 run bridge_enable_handoff;
+# mmcload & mmcboot are scripts included in the default socfpga uboot environment
+# it loads the devicetree image and kernel to memory
 run mmcload;
+# mmcboot sets the bootargs and boots the kernel with the dtb specified above
 run mmcboot;
