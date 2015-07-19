@@ -38,6 +38,8 @@ $1/preloader/preloader-mkpimage.bin: $$(PRELOADER_STAMP_$1)
 $1/preloader-mkpimage.bin: $1/preloader/preloader-mkpimage.bin
 	$(CP) $$< $$@
 
+PRELOADER_EXTRA_ARGS_$1 += $(PRELOADER_EXTRA_ARGS)
+
 $$(PRELOADER_GEN_STAMP_$1): $$(PRELOADER_GEN_DEPS_$1)
 	@$(MKDIR) $$(PRELOADER_DIR_$1)
 	$(SBT.CREATE_SETTINGS) \
@@ -45,7 +47,7 @@ $$(PRELOADER_GEN_STAMP_$1): $$(PRELOADER_GEN_DEPS_$1)
 		--bsp-dir $$(PRELOADER_DIR_$1) \
 		--preloader-settings-dir "$1/hps_isw_handoff/$(QSYS_BASE_NAME)_$(QSYS_HPS_INST_NAME)" \
 		--settings $$(PRELOADER_DIR_$1)/settings.bsp \
-		$(PRELOADER_EXTRA_ARGS)
+		$$(PRELOADER_EXTRA_ARGS_$1) 
 	$$(stamp_target)
 
 $(foreach p,$(UBOOT_PATCHES),$(eval $(call do_patch_uboot,$1,$p,$(PRELOADER_GEN_STAMP_$1))))
@@ -53,8 +55,9 @@ $(foreach p,$(UBOOT_PATCHES),$(eval $(call do_patch_uboot,$1,$p,$(PRELOADER_GEN_
 .PHONY: $1.uboot_patch
 $1.uboot_patch: $$(PRELOADER_FIXUP_STAMP_$1)
 
-$$(PRELOADER_FIXUP_STAMP_$1): $(foreach p,$(UBOOT_PATCHES),$(call get_stamp_target,$1.$(notdir $p))) $$(PRELOADER_GEN_STAMP_$1)
+$$(PRELOADER_FIXUP_STAMP_$1): $(foreach p,$(UBOOT_PATCHES),$(call get_stamp_target,$1.$(notdir $p)))
 	@$(ECHO) "#define CONFIG_SOC_BOARD_NAME $1" >> $1/preloader/generated/build.h
+	@$(ECHO) "#define CONFIG_CMD_CHIPID2MAC 1" >> $1/preloader/generated/build.h
 	$$(stamp_target)
 	
 $$(PRELOADER_STAMP_$1): $$(PRELOADER_DEPS_$1)

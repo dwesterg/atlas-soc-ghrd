@@ -1,7 +1,7 @@
 diff -Naur uboot-socfpga-orig/board/altera/common/chipid2mac.c uboot-socfpga/board/altera/common/chipid2mac.c
 --- uboot-socfpga-orig/board/altera/common/chipid2mac.c	1969-12-31 16:00:00.000000000 -0800
 +++ uboot-socfpga/board/altera/common/chipid2mac.c	2015-02-03 07:31:54.609881055 -0800
-@@ -0,0 +1,74 @@
+@@ -0,0 +1,66 @@
 +#include <common.h>
 +#include <command.h>
 +#include <asm/io.h>
@@ -36,18 +36,10 @@ diff -Naur uboot-socfpga-orig/board/altera/common/chipid2mac.c uboot-socfpga/boa
 +	ethaddr[1] = 0x07;
 +	ethaddr[2] = 0xed;
 +	
-+	while(readl(chipid_addr) != 0x33221100) {
-+		timeout++;
-+		if (timeout == 0xFFFF) {
-+			printf("timeout waiting for validator sync\n");
-+			return -1;
-+		}
-+	}
-+
-+	chipid_sum = (readb(chipid_addr+0x20) + readb(chipid_addr+0x1C)) << 24;
-+	chipid_sum +=(readb(chipid_addr+0x21) + readb(chipid_addr+0x1D)) << 16; 
-+	chipid_sum +=(readb(chipid_addr+0x22) + readb(chipid_addr+0x1E)) << 8; 
-+	chipid_sum +=(readb(chipid_addr+0x23) + readb(chipid_addr+0x1F)) << 0; 
++	chipid_sum = (readb(chipid_addr+0x4) + readb(chipid_addr+0x0)) << 24;
++	chipid_sum +=(readb(chipid_addr+0x5) + readb(chipid_addr+0x1)) << 16; 
++	chipid_sum +=(readb(chipid_addr+0x6) + readb(chipid_addr+0x2)) << 8; 
++	chipid_sum +=(readb(chipid_addr+0x7) + readb(chipid_addr+0x3)) << 0; 
 +
 +	ethaddr[3] = 0xFF & (chipid_sum >> 16);
 +	ethaddr[4] = 0xFF & (chipid_sum >> 8);
