@@ -4,8 +4,8 @@
 git clone -b angstrom-v2014.12-yocto1.7 git://github.com/Angstrom-distribution/setup-scripts.git
 
 # Add sources to layers.txt
-echo "meta-altera,git://github.com/dwesterg/meta-altera.git,master,HEAD" >> setup-scripts/sources/layers.txt
-echo "meta-altera-refdes,git://github.com/dwesterg/meta-altera-refdes.git,master,HEAD" >> setup-scripts/sources/layers.txt
+echo "meta-altera,git://github.com/dwesterg/meta-altera.git,angstrom-v2014.12-yocto1.7,HEAD" >> setup-scripts/sources/layers.txt
+echo "meta-altera-refdes,git://github.com/dwesterg/meta-altera-refdes.git,angstrom-v2014.12-yocto1.7,HEAD" >> setup-scripts/sources/layers.txt
 
 # add BBLayers
 sed -i '/meta-96boards/a \ \ \$\{TOPDIR\}\/sources\/meta-altera-refdes \\' setup-scripts/conf/bblayers.conf
