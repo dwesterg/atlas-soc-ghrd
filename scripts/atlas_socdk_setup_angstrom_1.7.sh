@@ -23,7 +23,7 @@ sed -i '/meta-gumstix-community/d' setup-scripts/conf/bblayers.conf
 sed -i '/rm_work/d' setup-scripts/conf/local.conf
 
 pushd setup-scripts
-MACHINE=atlas_socdk ./oebb.sh config atlas_socdk
+MACHINE=atlas_sockit ./oebb.sh config atlas_sockit
 popd
 
 # Change download and cache dirs
