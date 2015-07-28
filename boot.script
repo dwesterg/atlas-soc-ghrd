@@ -7,7 +7,7 @@ fpga load 0 $fpgadata $filesize;
 
 echo ---Setting Env variables---
 # Set the devicetree image to be used
-setenv fdtimage socfpga_cyclone5_atlas_socdk.dtb;
+setenv fdtimage zImage-socfpga_cyclone5_de0_sockit.dtb;
 # Set the kernel image to be used
 setenv bootimage zImage;
 
