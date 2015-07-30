@@ -8,8 +8,6 @@
 #	--ext3="./setup-scripts/deploy/glibc/images/atlas_sockit/atlas-soc-image-atlas_sockit.ext3" \
 #	--name="atlas_sdcard_v1.0rc2.img"
 
-cd "$(dirname ${0})"
-
 PROGRAM_NAME="$(basename ${0})"
 THE_SD_FAT_TAR_GZ=
 THE_LINUX_ZIMAGE=
