@@ -80,11 +80,6 @@ define stamp_target
 @$(TOUCH) $@
 endef
 
-.PHONY: clean
-clean:
-	@$(ECHO) "Cleaning stamp files (which will trigger rebuild)"
-	@$(RM) $(get_stamp_dir)
-	@$(ECHO) " TIP: Use 'make scrub_clean' to get a deeper clean"
 ################################################
 
 ################################################

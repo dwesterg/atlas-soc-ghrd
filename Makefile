@@ -10,6 +10,7 @@
 SHELL := /bin/bash
 
 .SUFFIXES: # Delete the default suffixes
+.DEFAULT_GOAL := help
 
 include mks/default.mk
 
@@ -266,6 +267,12 @@ tgz_scrub_clean:
 	$(MAKE) tgz AR_FILE=$(AR_FILE)
 	$(MAKE) -s scrub_clean
 	$(TAR) -xzf $(AR_FILE)
+
+.PHONY: clean
+clean:
+	@$(ECHO) "Cleaning stamp files (which will trigger rebuild)"
+	@$(RM) $(get_stamp_dir)
+	@$(ECHO) " TIP: Use 'make scrub_clean' to get a deeper clean"
 
 ################################################
 
