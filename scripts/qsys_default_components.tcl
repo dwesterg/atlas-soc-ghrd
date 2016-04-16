@@ -55,7 +55,8 @@ set_instance_parameter_value onchip_memory2_0 {dualPort} {0}
 set_instance_parameter_value onchip_memory2_0 {initMemContent} {1}
 set_instance_parameter_value onchip_memory2_0 {initializationFileName} {onchip_mem.hex}
 set_instance_parameter_value onchip_memory2_0 {instanceID} {NONE}
-set_instance_parameter_value onchip_memory2_0 {memorySize} {65536.0}
+#set_instance_parameter_value onchip_memory2_0 {memorySize} {65536.0}
+set_instance_parameter_value onchip_memory2_0 {memorySize} {32768.0}
 set_instance_parameter_value onchip_memory2_0 {readDuringWriteMode} {DONT_CARE}
 set_instance_parameter_value onchip_memory2_0 {simAllowMRAMContentsFile} {0}
 set_instance_parameter_value onchip_memory2_0 {simMemInitOnlyFilename} {0}
