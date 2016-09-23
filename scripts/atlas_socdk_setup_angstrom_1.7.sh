@@ -25,6 +25,9 @@ sed -i '/meta-96boards/a \ \ \$\{TOPDIR\}\/sources\/meta-altera \\' setup-script
 
 sed -i '/rm_work/d' setup-scripts/conf/local.conf
 
+# Remove guard against dash
+sed -i '/\n/!N;/\n.*Look for dash/{:a;/\n$/d;N;ba};P;D' setup-scripts/oebb.sh
+
 pushd setup-scripts
 MACHINE=atlas_sockit ./oebb.sh config atlas_sockit
 popd
