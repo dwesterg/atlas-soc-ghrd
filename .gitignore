@@ -1,0 +1,4 @@
+# scripts/atlas_socdk_setup_angstrom_1.7.sh (Kernel + rootfs):
+/ang_sstate_cache/
+/downloads/
+/setup-scripts/
