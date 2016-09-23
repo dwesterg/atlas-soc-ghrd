@@ -23,7 +23,8 @@ QUARTUS_HDL_SOURCE = $(wildcard src/*.v) $(wildcard src/*.vhd) $(wildcard src/*.
 QUARTUS_MISC_SOURCE = $(wildcard src/*.stp) $(wildcard src/*.sdc)
 PROJECT_ASSIGN_SCRIPTS = $(filter scripts/create_ghrd_quartus_%.tcl,$(TCL_SOURCE))
 
-QSYS_ADD_COMP_TCLS := $(sort $(wildcard scripts/qsys_add_*.tcl))
+QSYS_ADD_COMP_TCLS := $(sort $(filter-out\
+ %_fft128_components.tcl,$(wildcard scripts/qsys_add_*.tcl)))
 
 #UBOOT_PATCHES = patches/soc_workshop_uboot_patch.patch patches/soc_workshop_uboot_patch_2.patch
 LINUX_BRANCH ?= socfpga-3.10-ltsi
