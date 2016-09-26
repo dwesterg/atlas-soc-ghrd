@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # typical invocation from default location
 #[]$ ./atlas_sd_card_image_creation.sh \
