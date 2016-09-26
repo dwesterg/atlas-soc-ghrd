@@ -85,7 +85,7 @@ $1.quartus_apply_tcl_pin_assignments: $$(QSYS_TCL_PIN_ASSIGNMENTS_APPLY_TARGETS_
 .PHONY: $$(QSYS_TCL_PIN_ASSIGNMENTS_APPLY_TARGETS_$1)
 $$(QSYS_TCL_PIN_ASSIGNMENTS_APPLY_TARGETS_$1): $1_quartus_apply_tcl-% : %
 	@$(ECHO) "Applying $$<... to $(QUARTUS_QPF_$1)..."
-	quartus_sh -t $(CURDIR)/$$< $(CURDIR)/$$(QUARTUS_QPF_$1) 2>&1 | tee logs/$$(notdir $$@).log
+	quartus_sta -t $(CURDIR)/$$< $(CURDIR)/$$(QUARTUS_QPF_$1) 2>&1 | tee logs/$$(notdir $$@).log
 
 endif # QUARTUS_ENABLE_PIN_ASSIGNMENTS_APPLY == 1
 ######

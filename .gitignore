@@ -1,0 +1,6 @@
+# make all (FPGA + U-Boot):
+/ATLAS_SOC_GHRD/
+/logs/
+/sd_fat.tar.gz
+/stamp/
+/u-boot.scr
