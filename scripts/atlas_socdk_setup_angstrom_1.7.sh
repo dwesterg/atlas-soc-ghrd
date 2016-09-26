@@ -38,6 +38,15 @@ echo "SSTATE_DIR = \"\${TOPDIR}/../ang_sstate_cache\"" >> setup-scripts/conf/sit
 # this qemu doesnt build with gcc5
 rm setup-scripts/sources/meta-linaro/meta-linaro/recipes-devtools/qemu/qemu_git.bb
 
+# Patch build to remove errors
+cat <<"EOF" >>setup-scripts/conf/local.conf
+
+# Skip non-compilable package
+IMAGE_INSTALL_remove_pn-atlas-soc-image     = "atlas-soc-fftsw-apps"
+IMAGE_INSTALL_remove_pn-atlas-soc-image     = "atlas-soc-fftsw-apps-init"
+IMAGE_INSTALL_remove_pn-atlas-soc-image     = "atlas-soc-fftsw-apps-src"
+EOF
+
 cd setup-scripts
 source environment-angstrom-v2014.12
 
