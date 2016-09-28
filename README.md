@@ -17,6 +17,5 @@ or wherever the tools were installed.
     sudo ./scripts/atlas_sd_card_image_creation.sh\
      --sd_fat=sd_fat.tar.gz\
      --zImage=setup-scripts/deploy/glibc/images/atlas_sockit/zImage\
-     --dtb=setup-scripts/deploy/glibc/images/atlas_sockit/zImage-socfpga_cyclone5_de0_sockit.dtb\
      --ext3=setup-scripts/deploy/glibc/images/atlas_sockit/atlas-soc-image-atlas_sockit.ext3\
      --name=atlas_sdcard_v1.1-custom.img
