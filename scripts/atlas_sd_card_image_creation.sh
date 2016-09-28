@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # typical invocation from default location
 #[]$ ./atlas_sd_card_image_creation.sh \
@@ -23,10 +23,12 @@ case $i in
 		echo "USAGE: ${PROGRAM_NAME} \\"
 		echo "	--sd_fat=<path to ATLAS GHRD sd_fat.tar.gz> \\"
 		echo "	--zImage=<path to ATLAS Angstrom zImage> \\"
-		echo "	--dtb=<path to ATLAS Angstrom dtb file> \\"
+		echo "	[--dtb=<path to ATLAS Angstrom dtb file> \\]"
 		echo "	--ext3=<path to ATLAS Angstrom ext3> \\"
 		echo "	--name=<name of sd card image>"
 		echo ""
+		echo "If the dtb file is not specified, it must be contained"
+		echo "in the sd_fat.tar.gz image."
 		exit 1
 	;;
 	--sd_fat=*)
@@ -90,7 +92,7 @@ MY_TMP_TAR="$(mktemp --tmpdir=. --directory TMP_TAR.XXXX)"
 	exit 1
 }
 
-[ -f "${THE_DTB_FILE:?must specify --dtb argument}" ] || {
+[ -z "${THE_DTB_FILE}" -o -f "${THE_DTB_FILE}" ] || {
 	echo "ERROR: could not locate file provided by THE_DTB_FILE"
 	exit 1
 }
@@ -198,8 +200,10 @@ cp -R ${MY_TMP_TAR}/* ${MY_SD_FAT_MNT} || { echo "ERROR"; exit 1; }
 echo "Copying kernel zImage into FAT partition."
 cp ${THE_LINUX_ZIMAGE} ${MY_SD_FAT_MNT}/ || { echo "ERROR"; exit 1; }
 
-echo "Copying DTB into FAT partition."
-cp ${THE_DTB_FILE} ${MY_SD_FAT_MNT}/ || { echo "ERROR"; exit 1; }
+[ -z "${THE_DTB_FILE}" ] || {
+	echo "Copying DTB into FAT partition."
+	cp ${THE_DTB_FILE} ${MY_SD_FAT_MNT}/ || { echo "ERROR"; exit 1; }
+}
 
 echo "Copying preloader image into partition 3 of SD card image file."
 [ -f "${MY_SD_FAT_MNT}/ATLAS_SOC_GHRD/preloader-mkpimage.bin" ] || {
